@@ -23,9 +23,10 @@ class Program
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'programs')]
     private ?Category $category = null;
+
+    #[ORM\JoinColumn(nullable: false)]
 
     public function getId(): ?int
     {

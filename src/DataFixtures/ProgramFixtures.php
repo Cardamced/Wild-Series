@@ -13,7 +13,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {
         $program = new Program();
         $program->setTitle('Walking Dead');
-        $program ->setSynopsis('Des zombies envahissent la Terre');
+        $program->setSynopsis('Des zombies envahissent la Terre');
         $program->setCategory($this->getReference('category_Action'));
         $manager->persist($program);
         $manager->flush();
@@ -45,6 +45,13 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Aventure'));
         $manager->persist($program);
         $manager->flush();
+
+        $program = new Program();
+        $program->setTitle('Arcane');
+        $program->setCategory($this->getReference('category_Animation'));
+        $manager->persist($program);
+        $manager->flush();
+        $this->addReference('program_Arcane', $program);
     }
 
 

@@ -17,6 +17,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Action'));
         $manager->persist($program);
         $manager->flush();
+        $this->addReference('program_Walking_Dead', $program);
 
         $program = new Program();
         $program->setTitle('X-files');
@@ -24,6 +25,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Fantastique'));
         $manager->persist($program);
         $manager->flush();
+        $this->addReference('program_X_files', $program);
 
         $program = new Program();
         $program->setTitle('Clarice');
@@ -31,6 +33,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Horreur'));
         $manager->persist($program);
         $manager->flush();
+        $this->addReference('program_Clarice', $program);
 
         $program = new Program();
         $program->setTitle('Rick and Morty');
@@ -38,6 +41,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Animation'));
         $manager->persist($program);
         $manager->flush();
+        $this->addReference('program_Rick_and_Morty', $program);
 
         $program = new Program();
         $program->setTitle('Secret Invasion');
@@ -45,9 +49,11 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Aventure'));
         $manager->persist($program);
         $manager->flush();
+        $this->addReference('program_Secret_Invasion', $program);
 
         $program = new Program();
         $program->setTitle('Arcane');
+        $program->setSynopsis('');
         $program->setCategory($this->getReference('category_Animation'));
         $manager->persist($program);
         $manager->flush();

@@ -56,12 +56,12 @@ class Episode
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getSynopsis(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setSynopsis(string $description): self
     {
         $this->description = $description;
 

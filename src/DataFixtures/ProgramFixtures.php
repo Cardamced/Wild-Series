@@ -21,20 +21,21 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         public function load(ObjectManager $manager)
        {
-        $i = 0;
-           foreach (self::PROGRAMS as $programName) {
+           foreach (self::PROGRAMS as $key => $programName) {
                $program = new Program();
                $program
                 ->setTitle($programName['title'])
                 ->setSynopsis($programName['synopsis'])
                 ->setCategory($this->getReference('category_' . $programName['category']));
-             $this->addReference('program_' . $programName['title'], $program);
-             $this->addReference('program_' . $i, $program);
+             $this->addReference('program_' . $key, $program);
              $manager->persist($program);
-             $i++;
            }
            $manager->flush();
        }
+
+       //categoriesFixtures::Categories --> bloucler sur la constante de la catégorie mère pour avoir 5
+
+        //ex : pour chacun des programmes de chaque catégorie, je génère X épisodes.
 
     public function getDependencies()
     {

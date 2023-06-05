@@ -43,7 +43,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{programId}/seasons/{seasonId}', name : 'season_show')]
+    #[Route('/{program}/seasons/{season}', name : 'season_show')]
     public function showSeason(Program $program, Season $season): Response
     {
     

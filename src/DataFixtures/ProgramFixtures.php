@@ -9,45 +9,32 @@ use Doctrine\Persistence\ObjectManager;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager): void
-    {
-        $program = new Program();
-        $program->setTitle('Walking Dead');
-        $program ->setSynopsis('Des zombies envahissent la Terre');
-        $program->setCategory($this->getReference('category_Action'));
-        $manager->persist($program);
-        $manager->flush();
 
-        $program = new Program();
-        $program->setTitle('X-files');
-        $program->setSynopsis('Deux agents enquêtent sur des affaires non classées');
-        $program->setCategory($this->getReference('category_Fantastique'));
-        $manager->persist($program);
-        $manager->flush();
+    public const PROGRAMS = [
+        ['title' => 'Walking Dead', 'synopsis' => 'Des zombies envahissent la terre', 'category' => 'Action'],
+        ['title' => 'X-files', 'synopsis' => 'Deux agents enquêtent sur des affaires non classées', 'category' => 'Fantastique'],
+        ['title' => 'Clarice', 'synopsis' => 'l\'agent du FBI Clarice Starling poursuit des meurtriers et des prédateurs sexuels.','category' => 'Horreur'],
+        ['title' => 'Rick and Morty', 'synopsis' => 'Un brillant inventeur et son petit fils un peu à l\'Ouest partent à l\'aventure...', 'category' => 'Animation'],
+        ['title' => 'Arcane', 'synopsis' => 'Une série qui fait peur', 'category' => 'Animation'],
+        ['title' => 'Secret Invasion', 'synopsis' => 'Nick Fury rejoint ses alliés pour empêcher l\'envahissement imminent de la Terre.', 'category' => 'Aventure'],
+    ];
 
-        $program = new Program();
-        $program->setTitle('Clarice');
-        $program->setSynopsis('l\'agent du FBI Clarice Starling poursuit des meurtriers et des prédateurs sexuels.');
-        $program->setCategory($this->getReference('category_Horreur'));
-        $manager->persist($program);
-        $manager->flush();
-
-        $program = new Program();
-        $program->setTitle('Rick and Morty');
-        $program->setSynopsis('Un brillant inventeur et son petit fils un peu à l\'Ouest partent à l\'aventure...');
-        $program->setCategory($this->getReference('category_Animation'));
-        $manager->persist($program);
-        $manager->flush();
-
-        $program = new Program();
-        $program->setTitle('Secret Invasion');
-        $program->setSynopsis('Nick Fury rejoint ses alliés pour empêcher l\'envahissement imminent de la Terre.');
-        $program->setCategory($this->getReference('category_Aventure'));
-        $manager->persist($program);
-        $manager->flush();
-    }
-
-
+        public function load(ObjectManager $manager)
+       {
+        $i = 0;
+           foreach (self::PROGRAMS as $programName) {
+               $program = new Program();
+               $program
+                ->setTitle($programName['title'])
+                ->setSynopsis($programName['synopsis'])
+                ->setCategory($this->getReference('category_' . $programName['category']));
+             $this->addReference('program_' . $programName['title'], $program);
+             $this->addReference('program_' . $i, $program);
+             $manager->persist($program);
+             $i++;
+           }
+           $manager->flush();
+       }
 
     public function getDependencies()
     {

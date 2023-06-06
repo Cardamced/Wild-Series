@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Number</th>
-                <th>Synopsis</th>
+                <th>Description</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,7 +21,7 @@
                 <td>{{ episode.id }}</td>
                 <td>{{ episode.title }}</td>
                 <td>{{ episode.number }}</td>
-                <td>{{ episode.synopsis }}</td>
+                <td>{{ episode.description }}</td>
                 <td>
                     <a href="{{ path('app_episode_show', {'id': episode.id}) }}">show</a>
                     <a href="{{ path('app_episode_edit', {'id': episode.id}) }}">edit</a>

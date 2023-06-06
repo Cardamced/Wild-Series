@@ -20,7 +20,7 @@ class Program
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $synopsis = null;
+    private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
@@ -58,12 +58,12 @@ class Program
 
     public function getDescription(): ?string
     {
-        return $this->synopsis;
+        return $this->description;
     }
 
-    public function setDescription(string $synopsis): self
+    public function setDescription(string $description): self
     {
-        $this->synopsis = $synopsis;
+        $this->description = $description;
 
         return $this;
     }

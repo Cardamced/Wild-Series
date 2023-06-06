@@ -53,12 +53,12 @@ class Season
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
         return $this->synopsis;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setDescription(string $synopsis): self
     {
         $this->synopsis = $synopsis;
 

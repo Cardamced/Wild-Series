@@ -12,9 +12,9 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public const EPISODES = [
-        ['number' => '1', 'title' => 'I want to believe', 'synopsis' => 'Mulder est dans un bureau oublié de tous', 'season' => '1',],
-        ['number' => '1','title' => 'Deux agents', 'synopsis' => 'Scully rencontre Mulder', 'season' => '1',],
-        ['number' => '1','title' => 'Tooms', 'synopsis' => 'Eugene Tooms sème la terreur', 'season' => '1',],
+        ['number' => '1', 'title' => 'I want to believe', 'description' => 'Mulder est dans un bureau oublié de tous', 'season' => '1',],
+        ['number' => '1','title' => 'Deux agents', 'description' => 'Scully rencontre Mulder', 'season' => '1',],
+        ['number' => '1','title' => 'Tooms', 'description' => 'Eugene Tooms sème la terreur', 'season' => '1',],
     ];
 
     public function load(ObjectManager $manager)
@@ -24,7 +24,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
             $episode
                 ->setNumber($episodeName['number'])
                 ->setTitle($episodeName['title'])
-                ->setSynopsis($episodeName['synopsis'])
+                ->setDescription($episodeName['description'])
                 ->setSeason($this->getReference('season_' . $episodeName['season']));
             $manager->persist($episode);
         }
@@ -35,7 +35,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
             $episode = new Episode();
             $episode->setNumber($faker->numberBetween(1, 10));
             $episode->setTitle($faker->title());
-            $episode->setSynopsis($faker->paragraphs(3, true));
+            $episode->setDescription($faker->paragraphs(3, true));
             $episode->setSeason($this->getReference('season_' . $faker->numberBetween(0, 50)));
             $this->addReference('episode_' . $i, $episode);
             $manager->persist($episode);

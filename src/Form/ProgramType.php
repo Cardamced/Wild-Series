@@ -13,7 +13,7 @@ class ProgramType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('synopsis')
+            ->add('description')
             ->add('poster')
             ->add('category', null, ['choice_label' => 'name'])
         ;

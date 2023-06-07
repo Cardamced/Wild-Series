@@ -23,7 +23,7 @@ class Episode
     private ?int $number = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $synopsis = null;
+    private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'episodes')]
     private ?Season $season = null;
@@ -57,14 +57,14 @@ class Episode
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
-        return $this->synopsis;
+        return $this->description;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setDescription(string $description): self
     {
-        $this->synopsis = $synopsis;
+        $this->description = $description;
 
         return $this;
     }

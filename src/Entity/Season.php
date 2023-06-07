@@ -18,7 +18,7 @@ class Season
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $synopsis = null;
+    private ?string $description = null;
 
     #[ORM\Column]
     private ?int $number = null;
@@ -54,14 +54,14 @@ class Season
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
-        return $this->synopsis;
+        return $this->description;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setDescription(string $description): self
     {
-        $this->synopsis = $synopsis;
+        $this->description = $description;
 
         return $this;
     }

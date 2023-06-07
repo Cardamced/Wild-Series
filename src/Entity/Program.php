@@ -31,11 +31,11 @@ class Program
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Ne me laisse pas tout vide non plus')]
     #[Assert\Regex(
-        pattern: '/[^plus belle la vie]/',
-        match: false,
+        pattern: '/[^plus belle la vie$]/',
+        match: true,
         message: 'On parle de vraies séries, ici!',
     )]
-    private ?string $synopsis = null;
+    private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
@@ -71,14 +71,14 @@ class Program
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
-        return $this->synopsis;
+        return $this->description;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setDescription(string $description): self
     {
-        $this->synopsis = $synopsis;
+        $this->description = $description;
 
         return $this;
     }

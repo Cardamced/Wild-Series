@@ -46,7 +46,9 @@ class CategoryController extends AbstractController
         // Was the form submitted ?
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryRepository->save($category, true);            
+            $categoryRepository->save($category, true);  
+            
+            $this->addFlash('success', 'The new Categroy has been created');
 
             // Deal with the submitted data
     

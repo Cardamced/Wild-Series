@@ -13,9 +13,18 @@
 				{{ program.category.name }}</p>
 		</div>
 		{% for season in program.seasons %}
-			<a{{season.number}} href="{{ path('program_season_show', { 'programId': program.id, 'seasonId': season.Id }) }}" ></a>
+			<a href="{{ path('program_season_show', { 'program': program.id, 'season': season.Id }) }}">{{season.number}}</a>
 		{% endfor %}
 	</div>
+
+	<strong>Acteurs :</strong>
+	<ul>
+		{% for actor in program.actors %}
+			<li><a href="{{ path('app_actor_show', { 'id': actor.id }) }}">{{ actor.lastname }}</a></li>
+		{% else %}
+			<li>Aucun acteur pour cette série</li>
+		{% endfor %}
+	</ul>
 
 	<a href="{{ path('program_index') }}">
 		Retour à la liste des programmes

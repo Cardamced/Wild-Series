@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
 class Season
 {
@@ -53,12 +54,12 @@ class Season
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setSynopsis(string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 

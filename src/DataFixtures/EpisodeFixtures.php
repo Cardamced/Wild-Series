@@ -11,32 +11,15 @@ use Faker\Factory;
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
 
-    public const EPISODES = [
-        ['number' => '1', 'title' => 'I want to believe', 'synopsis' => 'Mulder est dans un bureau oublié de tous', 'season' => '1',],
-        ['number' => '1','title' => 'Deux agents', 'synopsis' => 'Scully rencontre Mulder', 'season' => '1',],
-        ['number' => '1','title' => 'Tooms', 'synopsis' => 'Eugene Tooms sème la terreur', 'season' => '1',],
-    ];
-
     public function load(ObjectManager $manager)
     {
-        foreach (self::EPISODES as $episodeName) {
-            $episode = new Episode();
-            $episode
-                ->setNumber($episodeName['number'])
-                ->setTitle($episodeName['title'])
-                ->setSynopsis($episodeName['synopsis'])
-                ->setSeason($this->getReference('season_' . $episodeName['season']));
-            $manager->persist($episode);
-        }
-        $manager->flush();
-
         $faker = Factory::create();
         for ($i = 0; $i < 500; $i++) {
             $episode = new Episode();
             $episode->setNumber($faker->numberBetween(1, 10));
             $episode->setTitle($faker->title());
-            $episode->setSynopsis($faker->paragraphs(3, true));
-            $episode->setSeason($this->getReference('season_' . $faker->numberBetween(0, 50)));
+            $episode->setDescription($faker->paragraphs(3, true));
+            $episode->setSeason($this->getReference('season_' . $i % 50));
             $this->addReference('episode_' . $i, $episode);
             $manager->persist($episode);
         }

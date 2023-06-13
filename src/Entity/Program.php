@@ -6,9 +6,13 @@ use App\Repository\ProgramRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
+#[UniqueEntity(fields: ['title'], ignoreNull: 'Ce titre existe déjà.')]
 class Program
 {
     #[ORM\Id]
@@ -16,11 +20,22 @@ class Program
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Ne me laisse pas tout vide')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'La catégorie saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+    )]
+    private $title;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $synopsis = null;
+    #[Assert\NotBlank(message: 'Ne me laisse pas tout vide non plus')]
+    #[Assert\Regex(
+        pattern: '/[^plus belle la vie$]/',
+        match: true,
+        message: 'On parle de vraies séries, ici!',
+    )]
+    private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
@@ -31,9 +46,13 @@ class Program
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class)]
     private $seasons;
 
+    #[ORM\ManyToMany(targetEntity: Actor::class, mappedBy: 'programs')]
+    private Collection $actors;
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
+        $this->actors = new ArrayCollection();
     }
 
 
@@ -56,14 +75,14 @@ class Program
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
-        return $this->synopsis;
+        return $this->description;
     }
 
-    public function setSynopsis(string $synopsis): self
+    public function setDescription(string $description): self
     {
-        $this->synopsis = $synopsis;
+        $this->description = $description;
 
         return $this;
     }
@@ -117,6 +136,33 @@ class Program
             if ($season->getProgram() === $this) {
                 $season->setProgram(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Actor>
+     */
+    public function getActors(): Collection
+    {
+        return $this->actors;
+    }
+
+    public function addActor(Actor $actor): self
+    {
+        if (!$this->actors->contains($actor)) {
+            $this->actors->add($actor);
+            $actor->addProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActor(Actor $actor): self
+    {
+        if ($this->actors->removeElement($actor)) {
+            $actor->removeProgram($this);
         }
 
         return $this;

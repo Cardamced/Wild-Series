@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: EpisodeRepository::class)]
 class Episode
 {
@@ -56,12 +57,12 @@ class Episode
         return $this;
     }
 
-    public function getSynopsis(): ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setSynopsis(string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 

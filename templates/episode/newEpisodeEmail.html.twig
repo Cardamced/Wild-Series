@@ -13,5 +13,6 @@
 	<p>Synopsis :
 		{{ episode.description }}</p>
 
-    <a href="{{ absolute_url(path('app_episode_show', {'slug': episode.slug})) }}">Voir l'épisode sur Wild Series</a>
+<a href class="return text-decoration-none fs-5 mx-3" "{{ path('app_episode_index') }}">Retour à la liste des épisodes</a>
+
 {% endblock %}

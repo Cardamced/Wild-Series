@@ -5,17 +5,20 @@
 namespace App\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use App\Repository\ProgramRepository;
-use App\Repository\SeasonRepository;
-use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
+use App\Entity\Program;
 use App\Form\ProgramType;
+use App\Service\ProgramDuration;
+use Symfony\Component\Mime\Email;
+use App\Repository\SeasonRepository;
+use App\Repository\ProgramRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 
@@ -34,8 +37,7 @@ class ProgramController extends AbstractController
 
     #[Route('/new', name: 'new')]
 
-    public function new(Request $request, ProgramRepository $programRepository, SluggerInterface $slugger): Response
-
+    public function new(Request $request, MailerInterface $mailer, ProgramRepository $programRepository, SluggerInterface $slugger): Response
     {
 
         $program = new Program();
@@ -49,7 +51,17 @@ class ProgramController extends AbstractController
         // Was the form submitted ?
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $program->setSlug($slugger->slug($program->getTitle()));
             $programRepository->save($program, true);
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('your_email@example.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('Program/newProgramEmail.html.twig', ['program' => $program]));
+
+
+            $mailer->send($email);
 
             $this->addFlash('success', 'The new program has been created');
 
@@ -68,18 +80,11 @@ class ProgramController extends AbstractController
 
     }
 
-    #[Route('/show/{id<^[0-9]+$>}', name: 'show')]
-    public function show(int $id, ProgramRepository $programRepository): Response
+    #[Route('/show/{slug}', name: 'show')]
+    public function show(Program $program, ProgramDuration $programDuration): Response
     {
-        $program = $programRepository->find($id);
-
-        if (!$program) {
-            throw $this->createNotFoundException(
-                'No program with id : ' . $id . ' found in program\'s table.'
-            );
-        }
         return $this->render('program/show.html.twig', [
-            'program' => $program
+            'program' => $program, 'programDuration' => $programDuration->calculate($program)
         ]);
     }
 

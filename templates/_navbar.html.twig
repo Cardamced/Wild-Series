@@ -11,10 +11,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Catégories</a>
-        <a class="nav-link" href="#">Séries</a>
-        <a class="nav-link disabled">épisodes</a>
+        <a class="nav-link active" aria-current="page" href="{{ path('app_index')}}">Home</a>
+        <a class="nav-link" href="{{ path('category_index') }}">Catégories</a>
+        <a class="nav-link" href="{{ path('program_index') }}">Séries</a>
+        <a class="nav-link" href="{{ path('app_episode_index') }}">épisodes</a>
       </div>
     </div>
   </div>

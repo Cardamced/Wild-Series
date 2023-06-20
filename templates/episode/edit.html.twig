@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Episode{% endblock %}
+{% block title %}Modifier l'épisode{% endblock %}
 
 {% block body %}
-    <h1>Edit Episode</h1>
+    <h1 class="titre mx-3" >Modifier l'épisode</h1>
 
-    {{ include('episode/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('episode/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_episode_index') }}">back to list</a>
+    <a href class="return text-decoration-none fs-5 mx-3" "{{ path('app_episode_index') }}">Retour à la liste des épisodes</a>
 
     {{ include('episode/_delete_form.html.twig') }}
 {% endblock %}

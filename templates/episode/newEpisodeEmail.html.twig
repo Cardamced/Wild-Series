@@ -1,0 +1,17 @@
+{% extends 'layoutEmail.html.twig' %}
+
+{% block title %}Wild Series
+{% endblock %}
+
+{% block body %}
+	<h1>Nouvel épisode
+		{{ episode.title }}
+		créé</h1>
+	<p>Hello, un nouvel épisode
+		{{ episode.title }} {{ episode.number }} 
+		vient d'être créé sur Wild Series</p>
+	<p>Synopsis :
+		{{ episode.description }}</p>
+
+    <a href="{{ absolute_url(path('app_episode_show', {'slug': episode.slug})) }}">Voir l'épisode sur Wild Series</a>
+{% endblock %}

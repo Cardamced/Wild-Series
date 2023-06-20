@@ -69,7 +69,7 @@ class Episode
         return $this;
     }
 
-    public function getSeason(): ?string
+    public function getSeason(): ?season
     {
         return $this->season;
     }

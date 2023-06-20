@@ -15,6 +15,9 @@
 				{{ program.category.name }}</h2>
 			<p>{{ program.description }}</p>
 			<a href="{{ path('program_show', { 'slug': program.slug }) }}">Voir la fiche du programme</a>
+
+			<img src="{{ vich_uploader_asset(program) }}" alt="{{ program.title }}">
+			
 		</div>
 	{% else %}
 		Aucune série trouvée.
